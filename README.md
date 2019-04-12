@@ -1,27 +1,10 @@
-# android-zxingLibrary
+# ZxingDemo
 
 
 **更新日志**
 
-- compile 1.3 2016/08/02 优化扫描API
+- compile 1.0 2019/04/12 首次构建
 
-- compile 1.4 2016/08/03 修复扫描时二维码拉伸问题
-
-- compile 1.5 2016/08/05 更新控制闪光灯API
-
-- compile 1.6 2016/08/08 更新生成带logo二维码时logo不带边距可能存在的问题
-
-- compile 1.7 2016/08/09 修改默认扫描框的大小，适配不同分辨率手机，修改自定义扫描框属性类型
-
-- compile 1.8 2016/08/10 修复解析二维码图片时可能存在的OOM问题
-
-- compile 1.9 2016/09/07 Library库中删除Application，在demo库中的Application执行初始化操作
-
-- compile 2.0 2016/10/12 测试Demo中添加Android M权限处理，代码库添加自定义属性支持小圆点是否展示
-
-- compile 2.1 2016/11/22 修复扫描中的一些bug
-
-- compile 2.2 2017/07/04 更新zxing包，修复一些已知的bug
 
 **使用说明**
 
