@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ZxingDemo</string>
+    <string name="title_activity_three">ThreeActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
