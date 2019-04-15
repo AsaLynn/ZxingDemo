@@ -194,8 +194,8 @@ public class CodeUtils {
     /**
      * 为CaptureFragment设置layout参数
      *
-     * @param captureFragment
-     * @param layoutId
+     * @param captureFragment 用于展示ui
+     * @param layoutId        具体的ui布局.
      */
     public static void setFragmentArgs(CaptureFragment captureFragment, int layoutId) {
         if (captureFragment == null || layoutId == -1) {
