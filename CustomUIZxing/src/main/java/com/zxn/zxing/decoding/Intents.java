@@ -16,9 +16,6 @@
 
 package com.zxn.zxing.decoding;
 
-import com.google.zxing.BarcodeFormat;
-
-
 /**
  * This class provides the constants to use when sending an Intent to Barcode Scanner.
  * These strings are effectively API and cannot be changed.
@@ -46,8 +43,8 @@ public final class Intents {
         public static final String MODE = "SCAN_MODE";
 
         /**
-         * Comma-separated list of formats to scan for. The values must match the names of BarcodeFormat
-         *
+         * Comma-separated list of formats to scan for. The values must match the names of
+         * {@link com.google.zxing.BarcodeFormat}s, such as {@link com.google.zxing.BarcodeFormat#EAN_13}.
          * Example: "EAN_13,EAN_8,QR_CODE"
          * <p>
          * This overrides {@link #MODE}.
@@ -55,7 +52,7 @@ public final class Intents {
         public static final String SCAN_FORMATS = "SCAN_FORMATS";
 
         /**
-         * see DecodeHintType.CHARACTER_SET
+         * @see com.google.zxing.DecodeHintType#CHARACTER_SET
          */
         public static final String CHARACTER_SET = "CHARACTER_SET";
 

@@ -23,6 +23,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
 import com.zxn.zxing.activity.CaptureFragment;
+import com.zxn.zxing.activity.CodeUtils;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -30,7 +31,6 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * This thread does all the heavy lifting of decoding the images.
- * �����߳�
  */
 final class DecodeThread extends Thread {
 
@@ -52,8 +52,14 @@ final class DecodeThread extends Thread {
 
         if (decodeFormats == null || decodeFormats.isEmpty()) {
             decodeFormats = new Vector<BarcodeFormat>();
-            decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
-            decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
+            if (CodeUtils.getFormasts() == CodeUtils.ONE_D_FORMATS) {
+                decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
+            } else if (CodeUtils.getFormasts() == CodeUtils.QR_CODE_FORMATS) {
+                decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
+            } else {
+                decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
+                decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
+            }
             decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS);
         }
 

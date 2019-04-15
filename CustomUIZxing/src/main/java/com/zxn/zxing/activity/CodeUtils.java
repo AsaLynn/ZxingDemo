@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.text.TextUtils;
 
 import com.google.zxing.BarcodeFormat;
@@ -22,8 +23,12 @@ import com.zxn.zxing.camera.BitmapLuminanceSource;
 import com.zxn.zxing.camera.CameraManager;
 import com.zxn.zxing.decoding.DecodeFormatManager;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import static android.view.View.VISIBLE;
 
 /**
  * Created by aaron on 16/7/27.
@@ -189,8 +194,8 @@ public class CodeUtils {
     /**
      * 为CaptureFragment设置layout参数
      *
-     * @param captureFragment 用于展示ui
-     * @param layoutId        具体的ui布局.
+     * @param captureFragment
+     * @param layoutId
      */
     public static void setFragmentArgs(CaptureFragment captureFragment, int layoutId) {
         if (captureFragment == null || layoutId == -1) {
@@ -218,5 +223,23 @@ public class CodeUtils {
                 camera.setParameters(parameter);
             }
         }
+    }
+
+    public static void setFormats(@FormatsType int formasts) {
+        mFormasts = formasts;
+    }
+
+    private static int mFormasts = 0;
+    public static final int DEFAULT_FORMATS = 0;
+    public static final int ONE_D_FORMATS = 1;
+    public static final int QR_CODE_FORMATS = 2;
+
+    @IntDef({DEFAULT_FORMATS, ONE_D_FORMATS, QR_CODE_FORMATS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FormatsType {
+    }
+
+    public static int getFormasts() {
+        return mFormasts;
     }
 }
