@@ -5,7 +5,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.LayoutRes;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
 import com.google.zxing.BarcodeFormat;
@@ -31,7 +34,7 @@ import java.util.Vector;
 import static android.view.View.VISIBLE;
 
 /**
- * Created by aaron on 16/7/27.
+ * Created by zxn on 2019-4-17.
  * 二维码扫描工具类
  */
 public class CodeUtils {
@@ -196,7 +199,9 @@ public class CodeUtils {
      *
      * @param captureFragment 用于展示ui
      * @param layoutId        具体的ui布局.
+     * @deprecated Use {@link #addCaptureFragment} instead.
      */
+    @Deprecated
     public static void setFragmentArgs(CaptureFragment captureFragment, int layoutId) {
         if (captureFragment == null || layoutId == -1) {
             return;
@@ -205,6 +210,25 @@ public class CodeUtils {
         Bundle bundle = new Bundle();
         bundle.putInt(LAYOUT_ID, layoutId);
         captureFragment.setArguments(bundle);
+    }
+
+    /**
+     * 根据布局UI效果,展示扫描页面.
+     *
+     * @param fragmentManager
+     * @param containerId     容器id.
+     * @param layoutId        布局文件id.
+     * @param analyzeCallback 扫描结果回调.
+     * @return
+     */
+    public static CaptureFragment addCaptureFragment(FragmentManager fragmentManager, @IdRes int containerId, @LayoutRes int layoutId, CodeUtils.AnalyzeCallback analyzeCallback) {
+        CaptureFragment captureFragment = new CaptureFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(LAYOUT_ID, layoutId);
+        captureFragment.setArguments(bundle);
+        captureFragment.setAnalyzeCallback(analyzeCallback);
+        fragmentManager.beginTransaction().replace(containerId, captureFragment).commitAllowingStateLoss();
+        return captureFragment;
     }
 
     public static void isLightEnable(boolean isEnable) {
