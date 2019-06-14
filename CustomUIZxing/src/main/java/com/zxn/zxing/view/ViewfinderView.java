@@ -108,6 +108,7 @@ public final class ViewfinderView extends View {
         // 扫描bitmap
         Drawable drawable = ta.getDrawable(R.styleable.ViewfinderView_inner_scan_bitmap);
         if (drawable != null) {
+
         }
 
         // 扫描控件
@@ -151,7 +152,7 @@ public final class ViewfinderView extends View {
             if (currentPossible.isEmpty()) {
                 lastPossibleResultPoints = null;
             } else {
-                possibleResultPoints = new HashSet<ResultPoint>(5);
+                possibleResultPoints = new HashSet<>(5);
                 lastPossibleResultPoints = currentPossible;
                 paint.setAlpha(OPAQUE);
                 paint.setColor(resultPointColor);

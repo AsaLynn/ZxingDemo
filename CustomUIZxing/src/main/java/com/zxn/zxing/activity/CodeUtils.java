@@ -227,7 +227,7 @@ public class CodeUtils {
         bundle.putInt(LAYOUT_ID, layoutId);
         captureFragment.setArguments(bundle);
         captureFragment.setAnalyzeCallback(analyzeCallback);
-        fragmentManager.beginTransaction().replace(containerId, captureFragment).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(containerId, captureFragment, CaptureFragment.class.getSimpleName()).commitAllowingStateLoss();
         return captureFragment;
     }
 

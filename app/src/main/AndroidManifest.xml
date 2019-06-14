@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.zxn.zxingdemo.SecondActivity" />
-        <activity android:name="com.zxn.zxingdemo.CustomActivity" />
+        <activity
+            android:name="com.zxn.zxingdemo.CustomActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.zxn.zxingdemo.ThreeActivity" />
         <activity android:name="com.zxn.zxingdemo.BaseActivity"></activity>
     </application>

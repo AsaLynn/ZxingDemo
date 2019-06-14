@@ -1,10 +1,16 @@
 package com.zxn.zxingdemo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zxn.zxing.activity.CaptureFragment;
 import com.zxn.zxing.activity.CodeUtils;
@@ -20,11 +26,24 @@ public class CustomActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        captureFragment = new CaptureFragment();
-        // 为二维码扫描界面设置定制化界面
-        CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
-        captureFragment.setAnalyzeCallback(analyzeCallback);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
+//        captureFragment = new CaptureFragment();
+//        // 为二维码扫描界面设置定制化界面
+//        CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
+//        captureFragment.setAnalyzeCallback(analyzeCallback);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+
+            @Override
+            public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
+                super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+                TextView textView = v.findViewById(R.id.tv_sacn_notice);
+                textView.setText("593066063---------");
+            }
+
+        }, true);
+
+        captureFragment = CodeUtils.addCaptureFragment(getSupportFragmentManager(), R.id.fl_my_container, R.layout.my_camera, analyzeCallback);
+
 
         initView();
     }
