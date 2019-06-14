@@ -2,8 +2,8 @@
 <resources>
 
     <declare-styleable name="ViewfinderView">
-        <attr name="inner_width" format="dimension"/>
-        <attr name="inner_height" format="dimension"/>
+        <attr name="inner_width" format="dimension" />
+        <attr name="inner_height" format="dimension" />
         <attr name="inner_margintop" format="dimension" />
         <attr name="inner_corner_color" format="color" />
         <attr name="inner_corner_length" format="dimension" />
@@ -11,6 +11,12 @@
         <attr name="inner_scan_bitmap" format="reference" />
         <attr name="inner_scan_speed" format="integer" />
         <attr name="inner_scan_iscircle" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ScanViewfinder">
+        <attr name="scanBackground" format="reference" />
+        <attr name="scanBitmap" format="reference" />
+        <attr name="scanSpeed" format="integer" />
     </declare-styleable>
 
 </resources>

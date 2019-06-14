@@ -20,8 +20,11 @@
         <activity
             android:name="com.zxn.zxingdemo.CustomActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.zxn.zxingdemo.CustomUIActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.zxn.zxingdemo.ThreeActivity" />
-        <activity android:name="com.zxn.zxingdemo.BaseActivity"></activity>
+        <activity android:name="com.zxn.zxingdemo.BaseActivity" />
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />

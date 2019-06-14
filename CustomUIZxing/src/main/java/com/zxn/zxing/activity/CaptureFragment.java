@@ -34,7 +34,7 @@ import java.util.Vector;
 public class CaptureFragment extends Fragment implements SurfaceHolder.Callback {
 
     private CaptureActivityHandler handler;
-    private ViewfinderView viewfinderView;
+//    private ViewfinderView viewfinderView;
     private boolean hasSurface;
     private Vector<BarcodeFormat> decodeFormats;
     private String characterSet;
@@ -76,7 +76,7 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
             view = inflater.inflate(R.layout.fragment_capture, null);
         }
 
-        viewfinderView = (ViewfinderView) view.findViewById(R.id.viewfinder_view);
+//        viewfinderView = (ViewfinderView) view.findViewById(R.id.viewfinder_view);
         surfaceView = (SurfaceView) view.findViewById(R.id.preview_view);
         surfaceHolder = surfaceView.getHolder();
 
@@ -156,7 +156,8 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
             callBack.callBack(null);
         }
         if (handler == null) {
-            handler = new CaptureActivityHandler(this, decodeFormats, characterSet, viewfinderView);
+//            handler = new CaptureActivityHandler(this, decodeFormats, characterSet, viewfinderView);
+            handler = new CaptureActivityHandler(this, decodeFormats, characterSet, null);
         }
     }
 
@@ -196,7 +197,7 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
     }
 
     public void drawViewfinder() {
-        viewfinderView.drawViewfinder();
+//        viewfinderView.drawViewfinder();
 
     }
 

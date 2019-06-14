@@ -20,7 +20,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     /**
      * 扫描跳转Activity RequestCode
@@ -35,6 +35,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public Button button2 = null;
     public Button button3 = null;
     public Button button4 = null;
+    public Button button5 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             ActivityCompat.requestPermissions(this, permissions, 100);
         }
     }
+
     /**
      * 初始化组件
      */
@@ -71,6 +73,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
         /**
          * 打开默认二维码扫描界面
          *
@@ -84,6 +87,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         button2.setOnClickListener(new ButtonOnClickListener(button2.getId()));
         button3.setOnClickListener(new ButtonOnClickListener(button3.getId()));
         button4.setOnClickListener(new ButtonOnClickListener(button4.getId()));
+        button5.setOnClickListener(new ButtonOnClickListener(button5.getId()));
     }
 
 
@@ -130,9 +134,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     e.printStackTrace();
                 }
             }
-        }
-
-        else if (requestCode == REQUEST_CAMERA_PERM) {
+        } else if (requestCode == REQUEST_CAMERA_PERM) {
             Toast.makeText(this, "从设置页面返回...", Toast.LENGTH_SHORT)
                     .show();
         }
@@ -147,6 +149,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     /**
      * EsayPermissions接管权限处理逻辑
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -162,6 +165,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     @AfterPermissionGranted(REQUEST_CAMERA_PERM)
     public void cameraTask(int viewId) {
+
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
             // Have permission, do the thing!
             onClick(viewId);
@@ -195,7 +199,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     /**
      * 按钮点击监听
      */
-    class ButtonOnClickListener implements View.OnClickListener{
+    class ButtonOnClickListener implements View.OnClickListener {
 
         private int buttonId;
 
@@ -222,6 +226,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     /**
      * 按钮点击事件处理逻辑
+     *
      * @param buttonId
      */
     private void onClick(int buttonId) {
@@ -234,6 +239,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //                intent = new Intent(MainActivity.this, SecondActivity.class);
 //                startActivityForResult(intent, REQUEST_CODE);
                 intent = new Intent(MainActivity.this, CustomActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.button5:
+                intent = new Intent(MainActivity.this, CustomUIActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             default:

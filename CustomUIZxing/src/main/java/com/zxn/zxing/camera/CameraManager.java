@@ -25,6 +25,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 
+import com.zxn.zxing.DisplayUtil;
+
 import java.io.IOException;
 
 /**
@@ -36,9 +38,9 @@ public final class CameraManager {
 
     private static final String TAG = CameraManager.class.getSimpleName();
 
-    public static int FRAME_WIDTH = -1;
-    public static int FRAME_HEIGHT = -1;
-    public static int FRAME_MARGINTOP = -1;
+    public static int FRAME_WIDTH = DisplayUtil.screenWidthPx / 2;
+    public static int FRAME_HEIGHT = DisplayUtil.screenWidthPx / 2;
+    public static int FRAME_MARGINTOP =100;
 
     private static CameraManager cameraManager;
 

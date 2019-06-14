@@ -40,6 +40,7 @@ import java.util.HashSet;
 /**
  * 自定义组件实现,扫描功能
  */
+@Deprecated
 public final class ViewfinderView extends View {
 
     private static final long ANIMATION_DELAY = 100L;
@@ -66,7 +67,8 @@ public final class ViewfinderView extends View {
         super(context, attrs, defStyleAttr);
         paint = new Paint();
         Resources resources = getResources();
-        maskColor = resources.getColor(R.color.viewfinder_mask);
+//        maskColor = resources.getColor(R.color.viewfinder_mask);
+        maskColor = resources.getColor(R.color.sbc_header_view);
         resultColor = resources.getColor(R.color.result_view);
         resultPointColor = resources.getColor(R.color.possible_result_points);
         possibleResultPoints = new HashSet<>(5);
