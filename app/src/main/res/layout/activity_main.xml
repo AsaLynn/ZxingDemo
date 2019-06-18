@@ -54,4 +54,14 @@
         android:layout_marginRight="20dp"
         android:text="定制化扫描界面2" />
 
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button5"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="测试生成一维码图片" />
+
 </RelativeLayout>

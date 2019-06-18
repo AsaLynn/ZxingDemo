@@ -26,25 +26,22 @@ public class CustomUIActivity extends BaseActivity {
 
     private CaptureFragment captureFragment;
 
+    FragmentManager.FragmentLifecycleCallbacks fragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
+
+        @Override
+        public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
+            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+            TextView textView = v.findViewById(R.id.tv_sacn_notice);
+            textView.setText("593066063---------");
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
-
-            @Override
-            public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
-                super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-//                ImageView iv_capture_scan_line = v.findViewById(R.id.iv_capture_scan_line);
-//                iv_capture_scan_line.setAnimation(createAnimation());
-//                ScanViewfinder scanViewfinder = v.findViewById(R.id.sv_viewfinder);
-//                scanViewfinder.startScan();
-                TextView textView = v.findViewById(R.id.tv_sacn_notice);
-                textView.setText("593066063---------");
-            }
-
-        }, true);
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true);
 
         captureFragment = CodeUtils.addCaptureFragment(getSupportFragmentManager(), R.id.fl_my_container, R.layout.my_custom_camera, analyzeCallback);
 
@@ -107,5 +104,11 @@ public class CustomUIActivity extends BaseActivity {
         animation.setRepeatMode(Animation.REVERSE);
         animation.setInterpolator(new LinearInterpolator());
         return animation;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycleCallbacks);
     }
 }

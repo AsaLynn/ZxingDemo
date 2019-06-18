@@ -30,33 +30,31 @@
 - 在module的build.gradle中执行compile操作
 
 ```
-
-
+ implementation 'com.zxn.zxing:CustomUIZxing:1.0.3'
 ```
 
 - 在demo Application中执行初始化操作
 ```
 @Override
-    public void onCreate() {
-        super.onCreate();
-
-        ZXingLibrary.initDisplayOpinion(this);
-    }
+public void onCreate() {
+    super.onCreate();
+    ZXingLibrary.initDisplayOpinion(this);
+}
 ```
 
 - 在代码中执行打开扫描二维码界面操作
 
 ```
 /**
-         * 打开默认二维码扫描界面
-         */
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
+ * 打开默认二维码扫描界面
+ */
+button1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+});
 ```
 这里的REQUEST_CODE是我们定义的int型常量。
 
@@ -64,30 +62,30 @@
 
 ```
 /**
-         * 处理二维码扫描结果
-         */
-        if (requestCode == REQUEST_CODE) {
-            //处理扫描结果（在界面上显示）
-            if (null != data) {
-                Bundle bundle = data.getExtras();
-                if (bundle == null) {
-                    return;
-                }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
-                }
-            }
+ * 处理二维码扫描结果
+ */
+if (requestCode == REQUEST_CODE) {
+    //处理扫描结果（在界面上显示）
+    if (null != data) {
+        Bundle bundle = data.getExtras();
+        if (bundle == null) {
+            return;
         }
+        if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+            String result = bundle.getString(CodeUtils.RESULT_STRING);
+            Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+        } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+            Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+        }
+    }
+}
 ```
 
 怎么样是不是很简单？下面我们可以来看一下具体的执行效果：
 
 **执行效果：**
 
-![image](https://github.com/yipianfengye/android-zxingLibrary/blob/master/images/ezgif.com-video-to-gif%20(2)%2015.33.08.gif)
+[图片上传失败...(image-482055-1560843225234)]%2015.33.08.gif)
 
 但是这样的话是不是太简单了，如果我想选择图片解析呢？别急，对二维码图片的解析也是支持的
 
@@ -105,36 +103,36 @@ startActivityForResult(intent, REQUEST_IMAGE);
 - 在Activity的onActivityResult方法中获取用户选中的图片并调用二维码图片解析API
 ```
 if (requestCode == REQUEST_IMAGE) {
-            if (data != null) {
-                Uri uri = data.getData();
-                ContentResolver cr = getContentResolver();
-                try {
-                    Bitmap mBitmap = MediaStore.Images.Media.getBitmap(cr, uri);//显得到bitmap图片
+    if (data != null) {
+        Uri uri = data.getData();
+        ContentResolver cr = getContentResolver();
+        try {
+            Bitmap mBitmap = MediaStore.Images.Media.getBitmap(cr, uri);//显得到bitmap图片
 
-                    CodeUtils.analyzeBitmap(mBitmap, new CodeUtils.AnalyzeCallback() {
-                        @Override
-                        public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-                            Toast.makeText(MainActivity.this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void onAnalyzeFailed() {
-                            Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                    if (mBitmap != null) {
-                        mBitmap.recycle();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+            CodeUtils.analyzeBitmap(mBitmap, new CodeUtils.AnalyzeCallback() {
+                @Override
+                public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+                    Toast.makeText(MainActivity.this, "解析结果:" + result, Toast.LENGTH_LONG).show();
                 }
+
+                @Override
+                public void onAnalyzeFailed() {
+                    Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            if (mBitmap != null) {
+                mBitmap.recycle();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+	}
+}
 ```
 
 **执行效果**
 
-![image](http://img.blog.csdn.net/20160727170831543)
+[图片上传失败...(image-e015df-1560843225234)]
 
 有了默认的二维码扫描界面，也有了对二维码图片的解析，可能有的同学会说如果我想定制化显示UI怎么办呢？没关系也支持滴。
 
@@ -178,21 +176,11 @@ if (requestCode == REQUEST_IMAGE) {
 
 ```
 @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        /**
-         * 执行扫面Fragment的初始化操作
-         */
-        CaptureFragment captureFragment = new CaptureFragment();
-        // 为二维码扫描界面设置定制化界面
-        CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
-        
-        captureFragment.setAnalyzeCallback(analyzeCallback);
-        /**
-         * 替换我们的扫描控件
-         */ getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
-    }
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_second);
+    CodeUtils.addCaptureFragment(getSupportFragmentManager(), R.id.fl_my_container, R.layout.my_custom_camera, analyzeCallback);
+}
 
 ```
 
@@ -226,6 +214,7 @@ if (requestCode == REQUEST_IMAGE) {
         }
     };
 ```
+
 仔细看的话，你会发现我们调用了CondeUtils.setFragmentArgs方法，该方法主要用于修改扫描界面扫描框与透明框相对位置的，与若不调用的话，其会显示默认的组件效果，而如果调用该方法的话，可以修改扫描框与透明框的相对位置等UI效果，我们可以看一下my_camera布局文件的实现。
 
 ```
@@ -263,47 +252,91 @@ if (requestCode == REQUEST_IMAGE) {
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <SurfaceView
         android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/result_view" />
+
+
+    <com.zxn.zxing.view.ScanViewfinder
+        android:id="@+id/sv_viewfinder"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/capture"
+        android:contentDescription="@string/app_name"
+        app:scanBitmap="@drawable/scan_line"
+        app:scanSpeed="12" />
+
+    <TextView
+        android:id="@+id/tv_sacn_notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_below="@id/sv_viewfinder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="593066063"
+        android:textColor="#ffffff"
+        android:visibility="visible" />
 
-    <com.uuzuche.lib_zxing.view.ViewfinderView
-        android:id="@+id/viewfinder_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 
-</FrameLayout>
+</RelativeLayout>
 ```
 
 可以发现其主要的区别就是在自定义的扫描控件中多了几个自定义的扫描框属性：
 
 ```
-<declare-styleable name="innerrect">
-        <attr name="inner_width" format="dimension"/><!-- 控制扫描框的宽度 -->
-        <attr name="inner_height" format="dimension"/><!-- 控制扫描框的高度 -->
-        <attr name="inner_margintop" format="dimension" /><!-- 控制扫描框距离顶部的距离 -->
-        <attr name="inner_corner_color" format="color" /><!-- 控制扫描框四角的颜色 -->
-        <attr name="inner_corner_length" format="dimension" /><!-- 控制扫描框四角的长度 -->
-        <attr name="inner_corner_width" format="dimension" /><!-- 控制扫描框四角的宽度 -->
-        <attr name="inner_scan_bitmap" format="reference" /><!-- 控制扫描图 -->
-        <attr name="inner_scan_speed" format="integer" /><!-- 控制扫描速度 -->
-        <attr name="inner_scan_iscircle" format="boolean" /><!-- 控制小圆点是否展示 -->
-    </declare-styleable>
+<declare-styleable name="ScanViewfinder">
+    <attr name="scanBackground" format="reference" />
+    <attr name="scanBitmap" format="reference" />
+    <attr name="scanSpeed" format="integer" />
+</declare-styleable>
+```
+代码中动态修改显示我们的扫描UI:
+```
+    FragmentManager.FragmentLifecycleCallbacks fragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
+
+        @Override
+        public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
+            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+            TextView textView = v.findViewById(R.id.tv_sacn_notice);
+            textView.setText("593066063---------");
+        }
+
+    };
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_second);
+    getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks,true);
+}
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycleCallbacks);
+    }
+
+
 ```
 
 通过以上几个属性我们就可以定制化的显示我们的扫描UI了，比如定制化微信扫描UI：
 
 **执行效果**
 
-![image](https://github.com/yipianfengye/android-zxingLibrary/blob/master/images/ezgif.com-video-to-gif%20(3)%2015.33.08.gif)
+[图片上传失败...(image-6fee1f-1560843225234)]%2015.33.08.gif)
 
 当然了如果以上的以上，你还是对定制化UI方面不太满意，可以直接下载我的项目，然后引入lib-zxing module作为你的module，直接修改其代码。
 
@@ -313,48 +346,60 @@ if (requestCode == REQUEST_IMAGE) {
 
 ```
 /**
-         * 生成二维码图片
-         */
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textContent = editText.getText().toString();
-                if (TextUtils.isEmpty(textContent)) {
-                    Toast.makeText(ThreeActivity.this, "您的输入为空!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                editText.setText("");
-                mBitmap = CodeUtils.createImage(textContent, 400, 400, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                imageView.setImageBitmap(mBitmap);
-            }
-        });
+ * 生成二维码图片
+ */
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        String textContent = editText.getText().toString();
+        if (TextUtils.isEmpty(textContent)) {
+            Toast.makeText(ThreeActivity.this, "您的输入为空!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        editText.setText("");
+        mBitmap = CodeUtils.createImage(textContent, 400, 400, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        imageView.setImageBitmap(mBitmap);
+    }
+});
 ```
 
 - 生成不带logo的二维码图片
 
 ```
 /**
-         * 生成不带logo的二维码图片
-         */
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+ * 生成不带logo的二维码图片
+ */
+button1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
 
-                String textContent = editText.getText().toString();
-                if (TextUtils.isEmpty(textContent)) {
-                    Toast.makeText(ThreeActivity.this, "您的输入为空!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                editText.setText("");
-                mBitmap = CodeUtils.createImage(textContent, 400, 400, null);
-                imageView.setImageBitmap(mBitmap);
-            }
-        });
+        String textContent = editText.getText().toString();
+        if (TextUtils.isEmpty(textContent)) {
+            Toast.makeText(ThreeActivity.this, "您的输入为空!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        editText.setText("");
+        mBitmap = CodeUtils.createImage(textContent, 400, 400, null);
+        imageView.setImageBitmap(mBitmap);
+    }
+});
 ```
-
+- 生成一维码效果:
+```
+/**
+ * 绘制条形码
+ *
+ * @param content       要生成条形码包含的内容
+ * @param widthPix      条形码的宽度
+ * @param heightPix     条形码的高度
+ * @param isShowContent 否则显示条形码包含的内容
+ * @return 返回生成条形的位图
+ */
+public static Bitmap createBarcode(String content, int widthPix, int heightPix, boolean isShowContent){}
+```
 - 执行效果
 
-![image](https://github.com/yipianfengye/android-zxingLibrary/blob/master/images/ezgif.com-video-to-gif%20(5).gif)
+[图片上传失败...(image-9a9d6e-1560843225234)].gif)
 
 - 支持控制闪光灯
 

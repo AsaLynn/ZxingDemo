@@ -24,6 +24,7 @@
             android:name="com.zxn.zxingdemo.CustomUIActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.zxn.zxingdemo.ThreeActivity" />
+        <activity android:name="com.zxn.zxingdemo.FiveActivity" />
         <activity android:name="com.zxn.zxingdemo.BaseActivity" />
     </application>
 

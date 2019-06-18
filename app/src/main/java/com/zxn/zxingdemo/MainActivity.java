@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public Button button3 = null;
     public Button button4 = null;
     public Button button5 = null;
+    private Button button6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
         button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
         /**
          * 打开默认二维码扫描界面
          *
@@ -88,6 +90,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         button3.setOnClickListener(new ButtonOnClickListener(button3.getId()));
         button4.setOnClickListener(new ButtonOnClickListener(button4.getId()));
         button5.setOnClickListener(new ButtonOnClickListener(button5.getId()));
+        button6.setOnClickListener(new ButtonOnClickListener(button6.getId()));
     }
 
 
@@ -217,7 +220,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             } else if (v.getId() == R.id.button4) {
                 Intent intent = new Intent(MainActivity.this, ThreeActivity.class);
                 startActivity(intent);
-            } else {
+            }  else if (v.getId() == R.id.button6) {
+                Intent intent = new Intent(MainActivity.this, FiveActivity.class);
+                startActivity(intent);
+            }else {
                 cameraTask(buttonId);
             }
         }
